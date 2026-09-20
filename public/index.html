@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кто выгуливает Бориса</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Кто выгуливает Бориса</h1>
+      <p class="subtitle">Офис «Догяндекс» · <span id="walk-date">…</span></p>
+    </header>
+
+    <section class="card">
+      <h2>Слоты прогулок на сегодня</h2>
+      <div id="slots" class="slots" aria-live="polite"></div>
+    </section>
+
+    <section class="card feeding-card">
+      <h2>Последнее кормление</h2>
+      <p id="feeding-info" class="feeding-info">Данных пока нет — покормите Бориса!</p>
+      <form id="feeding-form" class="inline-form">
+        <input type="text" id="feeding-name" placeholder="Ваше ФИО" maxlength="100" required>
+        <button type="submit">Борис накормлен</button>
+      </form>
+    </section>
+
+    <p id="message" class="message" role="status"></p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

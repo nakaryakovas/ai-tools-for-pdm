@@ -1,0 +1,159 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #2b2b2b;
+  background: #f4f1ea;
+}
+
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 12px 12px 24px;
+}
+
+.header {
+  margin-bottom: 10px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.subtitle {
+  margin: 2px 0 0;
+  color: #6b6b6b;
+  font-size: 0.9rem;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.card h2 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.feeding-info {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+}
+
+.inline-form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+input[type='text'] {
+  flex: 1;
+  min-width: 160px;
+  padding: 7px 10px;
+  border: 1px solid #cfcfcf;
+  border-radius: 7px;
+  font-size: 0.9rem;
+}
+
+button {
+  padding: 7px 14px;
+  border: none;
+  border-radius: 7px;
+  background: #3a7d44;
+  color: #ffffff;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #2f6637;
+}
+
+.slots {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  background: #faf8f4;
+  border: 2px solid #cfcfcf;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.slot {
+  border: 2px solid #cfcfcf;
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.slot.free {
+  border-color: #3a7d44;
+}
+
+.slot.busy {
+  border-color: #b35555;
+  background: #faf1f1;
+  cursor: pointer;
+}
+
+.slot.busy:hover {
+  background: #f5e6e6;
+}
+
+.slot-info {
+  flex-shrink: 0;
+  min-width: 170px;
+}
+
+.slot-time {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.slot-status {
+  font-size: 0.85rem;
+  color: #555555;
+}
+
+.slot.busy .slot-status {
+  color: #7a3333;
+}
+
+.slot .inline-form {
+  flex: 1;
+  flex-wrap: nowrap;
+}
+
+.slot .inline-form input[type='text'] {
+  min-width: 0;
+  flex: 1;
+}
+
+.slot .inline-form button {
+  white-space: nowrap;
+}
+
+.message {
+  min-height: 1.3em;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.message.error {
+  color: #b35555;
+}
+
+.message.success {
+  color: #3a7d44;
+}

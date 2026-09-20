@@ -1,0 +1,12 @@
+{
+  "name": "boris-walks",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Кто выгуливает Бориса — учебный micro-MVP для «Догяндекса»",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.3"
+  }
+}

@@ -112,8 +112,9 @@ button:hover {
 }
 
 .slot-info {
-  flex-shrink: 0;
-  min-width: 170px;
+  flex-shrink: 1;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .slot-time {
@@ -132,7 +133,8 @@ button:hover {
 
 .slot .inline-form {
   flex: 1;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
 .slot .inline-form input[type='text'] {
@@ -140,7 +142,15 @@ button:hover {
   flex: 1;
 }
 
+.inline-form label {
+  font-size: 0.9rem;
+  color: #555555;
+  align-self: center;
+  white-space: nowrap;
+}
+
 .slot .inline-form button {
+  margin-left: auto;
   white-space: nowrap;
 }
 

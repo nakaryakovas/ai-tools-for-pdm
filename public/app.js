@@ -69,15 +69,18 @@ function render(state) {
       info.append(time, status);
       const form = document.createElement('form');
       form.className = 'inline-form';
+      const label = document.createElement('label');
+      label.textContent = 'ФИО';
+      label.htmlFor = 'walk-name-' + slot.slot_time.replace(':', '-');
       const input = document.createElement('input');
       input.type = 'text';
-      input.placeholder = 'Ваше ФИО';
+      input.id = label.htmlFor;
       input.maxLength = 100;
       input.required = true;
       const button = document.createElement('button');
       button.type = 'submit';
       button.textContent = 'Записаться';
-      form.append(input, button);
+      form.append(label, input, button);
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         book(slot.slot_time, input.value);

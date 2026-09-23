@@ -42,6 +42,21 @@ function currentWalkDate() {
   return `${get('year')}-${get('month')}-${get('day')}`;
 }
 
+function moscowNowIso() {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: TIME_ZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  }).formatToParts(new Date());
+  const get = (type) => parts.find((p) => p.type === type).value;
+  return `${get('year')}-${get('month')}-${get('day')}T${get('hour')}:${get('minute')}:${get('second')}+03:00`;
+}
+
 function ensureSlots(walkDate) {
   const insert = db.prepare(
     'INSERT OR IGNORE INTO walk_slots (walk_date, slot_time) VALUES (?, ?)'
@@ -72,16 +87,33 @@ function json(res, status, body) {
   res.end(JSON.stringify(body));
 }
 
+class BodyTooLargeError extends Error {
+  constructor() {
+    super('Слишком большой запрос');
+  }
+}
+
 function readBody(req) {
   return new Promise((resolve, reject) => {
     let data = '';
     req.on('data', (chunk) => {
       data += chunk;
-      if (data.length > 1e5) req.destroy();
+      if (data.length > 1e5) {
+        req.removeAllListeners('data');
+        req.resume();
+        reject(new BodyTooLargeError());
+      }
     });
     req.on('end', () => resolve(data));
     req.on('error', reject);
   });
+}
+
+function badRequest(err) {
+  if (err instanceof BodyTooLargeError) {
+    return { status: 413, message: err.message };
+  }
+  return { status: 400, message: 'Некорректный запрос' };
 }
 
 async function handleApi(req, res, pathname) {
@@ -93,8 +125,9 @@ async function handleApi(req, res, pathname) {
     let payload;
     try {
       payload = JSON.parse(await readBody(req));
-    } catch {
-      return json(res, 400, { error: 'Некорректный запрос' });
+    } catch (err) {
+      const bad = badRequest(err);
+      return json(res, bad.status, { error: bad.message });
     }
     const name = String(payload.name || '').trim();
     const slotTime = String(payload.slotTime || '');
@@ -132,14 +165,15 @@ async function handleApi(req, res, pathname) {
     let payload;
     try {
       payload = JSON.parse(await readBody(req));
-    } catch {
-      return json(res, 400, { error: 'Некорректный запрос' });
+    } catch (err) {
+      const bad = badRequest(err);
+      return json(res, bad.status, { error: bad.message });
     }
     const name = String(payload.name || '').trim();
     if (!name) {
       return json(res, 400, { error: 'Введите ФИО' });
     }
-    const fedAt = new Date().toISOString();
+    const fedAt = moscowNowIso();
     db.prepare('INSERT INTO feedings (employee_name, fed_at) VALUES (?, ?)').run(
       name,
       fedAt

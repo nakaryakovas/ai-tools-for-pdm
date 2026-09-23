@@ -1,4 +1,3 @@
-
 # «Кто выгуливает Бориса» — спецификация проекта
 
 ## Контекст
@@ -42,9 +41,8 @@
 Приложение использует настоящий SQLite-файл в папке проекта. Не заменяйте его `localStorage`, массивом в памяти процесса, моками или статичной разметкой.
 
 ИИ-агент сам выбирает и устанавливает совместимый с Node.js SQLite-драйвер, но обязан реализовать приведённую ниже схему и работу с ней. Вам не нужно вручную изучать SQLite или писать SQL: передайте этот раздел агенту вместе с задачей.
- 
 
-sql
+```sql
 CREATE TABLE IF NOT EXISTS walk_slots (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   walk_date TEXT NOT NULL,
@@ -58,11 +56,13 @@ CREATE TABLE IF NOT EXISTS walk_slots (
     (booked_by IS NOT NULL AND booked_at IS NOT NULL)
   )
 );
+
 CREATE TABLE IF NOT EXISTS feedings (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   employee_name TEXT NOT NULL,
   fed_at TEXT NOT NULL
 );
+```
 
 Для текущей даты приложение создаёт пять записей `walk_slots` с фиксированным временем `09:00`, `11:00`, `13:00`, `15:00` и `17:00`, если таких записей ещё нет. Первоначально все слоты свободны.
 
